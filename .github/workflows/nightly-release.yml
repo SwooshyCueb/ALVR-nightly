@@ -18,7 +18,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          repository: "alvr-org/ALVR"
+          repository: "curoviyxru/ALVR"
+          ref: "pico-product"
       - uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
@@ -61,7 +62,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          repository: "alvr-org/ALVR"
+          repository: "curoviyxru/ALVR"
           ref: ${{ needs.prepare_release.outputs.release_ref }}
           submodules: true
       - uses: actions-rs/toolchain@v1
@@ -112,45 +113,6 @@ jobs:
           asset_name: alvr_streamer_windows.zip
           asset_content_type: application/zip
 
-  build_windows_streamer_debug:
-    runs-on: windows-2019
-    needs: [prepare_release]
-    env:
-      LIBCLANG_PATH: 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Tools\Llvm\x64\bin'
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          repository: "alvr-org/ALVR"
-          ref: ${{ needs.prepare_release.outputs.release_ref }}
-          submodules: true
-      - uses: actions-rs/toolchain@v1
-        with:
-          toolchain: stable
-          override: true
-
-      - uses: crazy-max/ghaction-chocolatey@v1
-        with:
-          args: install zip unzip pkgconfiglite
-
-      - name: Build and package ALVR
-        env:
-          RUST_BACKTRACE: 1
-        run: |
-          cargo xtask bump --nightly
-          cargo xtask build-streamer --gpl --ci
-          cd build
-          zip -r9X alvr_streamer_windows .
-
-      - name: Upload portable streamer (zip)
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ needs.prepare_release.outputs.upload_url }}
-          asset_path: ./build/alvr_streamer_windows.zip
-          asset_name: alvr_streamer_windows_debug.zip
-          asset_content_type: application/zip
-
   build_windows_launcher:
     runs-on: windows-2019
     needs: [prepare_release]
@@ -159,7 +121,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          repository: "alvr-org/ALVR"
+          repository: "curoviyxru/ALVR"
           ref: ${{ needs.prepare_release.outputs.release_ref }}
       - uses: actions-rs/toolchain@v1
         with:
@@ -193,7 +155,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          repository: "alvr-org/ALVR"
+          repository: "curoviyxru/ALVR"
           ref: ${{ needs.prepare_release.outputs.release_ref }}
           submodules: true
       - uses: actions-rs/toolchain@v1
@@ -230,7 +192,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          repository: "alvr-org/ALVR"
+          repository: "curoviyxru/ALVR"
           ref: ${{ needs.prepare_release.outputs.release_ref }}
           submodules: true
       - uses: actions-rs/toolchain@v1
@@ -269,7 +231,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          repository: "alvr-org/ALVR"
+          repository: "curoviyxru/ALVR"
           ref: ${{ needs.prepare_release.outputs.release_ref }}
       - uses: actions-rs/toolchain@v1
         with:
@@ -301,7 +263,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          repository: "alvr-org/ALVR"
+          repository: "curoviyxru/ALVR"
           ref: ${{ needs.prepare_release.outputs.release_ref }}
 
       - name: Build and install dependencies
@@ -334,7 +296,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          repository: "alvr-org/ALVR"
+          repository: "curoviyxru/ALVR"
           ref: ${{ needs.prepare_release.outputs.release_ref }}
           submodules: true
       - uses: actions-rs/toolchain@v1
