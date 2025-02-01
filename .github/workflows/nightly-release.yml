@@ -3,10 +3,7 @@ name: Release nightly
 env:
   CARGO_TERM_COLOR: always
 
-on:
-  workflow_dispatch:
-  schedule:
-    - cron: "0 22 * * *"
+on: workflow_dispatch
 
 jobs:
   prepare_release:
